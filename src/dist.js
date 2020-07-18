@@ -1,1 +1,1 @@
-window.cpfVal = require('./core')
+window.toArrayBuffer = require('./core')
