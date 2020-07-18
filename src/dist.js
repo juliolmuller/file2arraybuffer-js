@@ -1,0 +1,1 @@
+window.cpfVal = require('./core')
