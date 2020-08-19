@@ -117,11 +117,11 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"rqMW":[function(require,module,exports) {
+})({"Focm":[function(require,module,exports) {
 /**
  * Generate the Array Buffer object for target reference provided as parameter.
  *
- * @param {String|HTMLElement|FileList|File|ArrayBuffer|Blob} target
+ * @param {String|HTMLInputElement|FileList|File|ArrayBuffer|Blob} target
  * @return {Promise<ArrayBuffer>}
  */
 var toArrayBuffer = function toArrayBuffer(target) {
@@ -132,7 +132,6 @@ var toArrayBuffer = function toArrayBuffer(target) {
   }
 
   if (!target) {
-    // eslint-disable-next-line max-len
     return Promise.reject(new Error("Parameter to convert to ArrayBuffer is empty (value: '".concat(target, "').")));
   }
 
@@ -148,7 +147,6 @@ var toArrayBuffer = function toArrayBuffer(target) {
     var el = document.querySelector(target);
 
     if (!el) {
-      // eslint-disable-next-line max-len
       return Promise.reject(new Error("No HTML found with selector \"".concat(target, "\".")));
     }
 
@@ -157,7 +155,6 @@ var toArrayBuffer = function toArrayBuffer(target) {
 
   if (typeof HTMLInputElement !== 'undefined' && target.constructor === HTMLInputElement) {
     if (!target.files) {
-      // eslint-disable-next-line max-len
       return Promise.reject(new Error('HTML input element reference is not of type "file".'));
     }
 
@@ -166,7 +163,6 @@ var toArrayBuffer = function toArrayBuffer(target) {
 
   if (typeof FileList !== 'undefined' && target.constructor === FileList) {
     if (target.length === 0) {
-      // eslint-disable-next-line max-len
       return Promise.reject(new Error('Object FileList is empty.'));
     }
 
@@ -190,14 +186,13 @@ var toArrayBuffer = function toArrayBuffer(target) {
 
       reader.readAsArrayBuffer(target);
     });
-  } // eslint-disable-next-line max-len
-
+  }
 
   return Promise.reject(new Error('Parameter type must be an instance of HTMLInputElement, FileList, File, String (input selector), Blob or ArrayBuffer'));
 };
 
 module.exports = toArrayBuffer;
 },{}],"UeJd":[function(require,module,exports) {
-window.toArrayBuffer = require('./core');
-},{"./core":"rqMW"}]},{},["UeJd"], null)
+window.toArrayBuffer = require('./index');
+},{"./index":"Focm"}]},{},["UeJd"], null)
 //# sourceMappingURL=/to-arraybuffer.js.map
