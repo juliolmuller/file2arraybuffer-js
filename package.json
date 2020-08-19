@@ -1,6 +1,6 @@
 {
   "name": "@lacussoft/to-arraybuffer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Basic function to convert files into ArrayBuffer object.",
   "author": "Julio L. Muller",
   "license": "MIT",
@@ -23,19 +23,19 @@
     "url": "https://github.com/lacussoft/to-arraybuffer/issues"
   },
   "homepage": "https://github.com/lacussoft/to-arraybuffer#readme",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "npm run build:dist && npm run build:node",
     "build:dist": "parcel build src/dist.js -o to-arraybuffer.js --no-minify && parcel build src/dist.js -o to-arraybuffer.min.js",
-    "build:node": "babel src/core/index.js -o src/index.js --presets=@babel/preset-env",
+    "build:node": "babel src/index.js -o index.js --presets=@babel/preset-env",
     "test": "jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
+    "@lacussoft/eslint-config-standard": "^1.0.6",
     "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0",
     "jest": "^25.5.4",
     "parcel-bundler": "^1.12.4"
   }

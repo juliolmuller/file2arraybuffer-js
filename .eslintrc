@@ -1,0 +1,22 @@
+{
+  "ignorePatterns": [
+    "/index.js"
+  ],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "@lacussoft/standard"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "no-param-reassign": "off",
+    "prefer-destructuring": "off"
+  }
+}
