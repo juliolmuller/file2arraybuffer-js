@@ -1,81 +1,65 @@
-"use strict";
 
 /**
  * Generate the Array Buffer object for target reference provided as parameter.
  *
- * @param {String|HTMLElement|FileList|File|ArrayBuffer|Blob} target
+ * @param {String|HTMLInputElement|FileList|File|ArrayBuffer|Blob} target
  * @return {Promise<ArrayBuffer>}
  */
-var toArrayBuffer = function toArrayBuffer(target) {
+const toArrayBuffer = (target) => {
+
   if (typeof Promise === 'undefined') {
-    throw new ReferenceError('Your environment does not support Promises.');
+    throw new ReferenceError('Your environment does not support Promises.')
   } else if (typeof ArrayBuffer === 'undefined') {
-    throw new ReferenceError('Your environment does not support ArrayBuffer.');
+    throw new ReferenceError('Your environment does not support ArrayBuffer.')
   }
 
   if (!target) {
-    // eslint-disable-next-line max-len
-    return Promise.reject(new Error("Parameter to convert to ArrayBuffer is empty (value: '".concat(target, "').")));
+    return Promise.reject(new Error(`Parameter to convert to ArrayBuffer is empty (value: '${target}').`))
   }
 
   if (target.constructor === ArrayBuffer) {
-    return Promise.resolve(target);
+    return Promise.resolve(target)
   }
 
   if (typeof Blob !== 'undefined' && target.constructor === Blob) {
-    return target.toArrayBuffer();
+    return target.toArrayBuffer()
   }
 
   if (target.constructor === String) {
-    var el = document.querySelector(target);
-
+    const el = document.querySelector(target)
     if (!el) {
-      // eslint-disable-next-line max-len
-      return Promise.reject(new Error("No HTML found with selector \"".concat(target, "\".")));
+      return Promise.reject(new Error(`No HTML found with selector "${target}".`))
     }
-
-    target = el;
+    target = el
   }
 
   if (typeof HTMLInputElement !== 'undefined' && target.constructor === HTMLInputElement) {
     if (!target.files) {
-      // eslint-disable-next-line max-len
-      return Promise.reject(new Error('HTML input element reference is not of type "file".'));
+      return Promise.reject(new Error('HTML input element reference is not of type "file".'))
     }
-
-    target = target.files;
+    target = target.files
   }
 
   if (typeof FileList !== 'undefined' && target.constructor === FileList) {
     if (target.length === 0) {
-      // eslint-disable-next-line max-len
-      return Promise.reject(new Error('Object FileList is empty.'));
+      return Promise.reject(new Error('Object FileList is empty.'))
     }
-
-    target = target[0];
+    target = target[0]
   }
 
   if (typeof File !== 'undefined' && target.constructor === File) {
     if (typeof FileReader === 'undefined') {
-      throw new TypeError('Your environment does not support FileReader.');
+      throw new TypeError('Your environment does not support FileReader.')
     }
+    const reader = new FileReader()
+    return new Promise((resolve, reject) => {
+      reader.onloadend = (ev) => resolve(ev.target.result)
+      reader.onerror = (ev) => reject(ev.target.error)
+      reader.readAsArrayBuffer(target)
+    })
+  }
 
-    var reader = new FileReader();
-    return new Promise(function (resolve, reject) {
-      reader.onloadend = function (ev) {
-        return resolve(ev.target.result);
-      };
+  return Promise.reject(new Error('Parameter type must be an instance of HTMLInputElement, FileList, File, String (input selector), Blob or ArrayBuffer'))
+}
 
-      reader.onerror = function (ev) {
-        return reject(ev.target.error);
-      };
-
-      reader.readAsArrayBuffer(target);
-    });
-  } // eslint-disable-next-line max-len
-
-
-  return Promise.reject(new Error('Parameter type must be an instance of HTMLInputElement, FileList, File, String (input selector), Blob or ArrayBuffer'));
-};
-
-module.exports = toArrayBuffer;
+module.exports = toArrayBuffer

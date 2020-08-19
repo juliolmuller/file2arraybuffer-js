@@ -1,1 +1,1 @@
-window.toArrayBuffer = require('./core')
+window.toArrayBuffer = require('./index')
