@@ -1,26 +1,27 @@
 # LacusSoft :: to-arraybuffer
 
-[![npm version](https://img.shields.io/npm/v/@lacussoft/to-arraybuffer.svg?style=flat-square)](https://www.npmjs.org/package/@lacussoft/to-arraybuffer)
-[![install size](https://packagephobia.now.sh/badge?p=@lacussoft/to-arraybuffer)](https://packagephobia.now.sh/result?p=@lacussoft/to-arraybuffer)
-[![npm downloads](https://img.shields.io/npm/dm/@lacussoft/to-arraybuffer.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@lacussoft/to-arraybuffer)
-<!-- [![build status](https://img.shields.io/travis/lacussoft/to-arraybuffer/master.svg?style=flat-square)](https://travis-ci.org/lacussoft/to-arraybuffer) -->
+![NPM Latest Version](https://img.shields.io/npm/v/@lacussoft/to-arraybuffer)
+![Downloads Count](https://img.shields.io/npm/dm/@lacussoft/to-arraybuffer.svg)
+![Bundle Size](https://packagephobia.now.sh/badge?p=@lacussoft/to-arraybuffer)
+![Last Update Date](https://img.shields.io/github/last-commit/juliolmuller/to-arraybuffer)
+![Project License](https://img.shields.io/github/license/juliolmuller/to-arraybuffer)
 
-Straight forward function to generate **ArrayBuffer** objects for files - commonly required web web services when uploading files e.g.: SharePoint REST API).
+Promise based function to generate **ArrayBuffer** objects for files - commonly required by web services like the SharePoint REST API.
 
-### Installation:
+## Installation
 
 ```bash
 $ npm install @lacussoft/to-arraybuffer
 ```
 
-### Import:
+## Import
 
 ```js
-// ES6+ notation
+// ES Modules
 import toArrayBuffer from '@lacussoft/to-arraybuffer'
 
 // Common JS
-const toArrayBuffer = require('@lacussoft/to-arraybuffer')
+const { toArrayBuffer } = require('@lacussoft/to-arraybuffer')
 ```
 
 or import it through your HTML file, using CDN:
@@ -29,7 +30,7 @@ or import it through your HTML file, using CDN:
 <script src="https://cdn.jsdelivr.net/npm/@lacussoft/to-arraybuffer@latest/dist/to-arraybuffer.min.js"></script>
 ```
 
-### Usage:
+## Usage
 
 You can use various parameter types to reference your HTML input element holding the file, as well as **Blob** instances you may generate on the fly. As the process of generating **ArrayBuffer** is computationally expense, the result is not the ArrayBuffer itself, but a promise to it, so consider asynchronous approach to work with that.
 
@@ -46,11 +47,11 @@ You can use various parameter types to reference your HTML input element holding
         // Use the HTML element directly (must be of type "file")
         const arrBuffer = await toArrayBuffer(ev.target)
 
-        // Use the HTML element directly (must be of type "file")
-        const arrBuffer = await toArrayBuffer(ev.target)
-
         // Use the element attribute that stores the FileList (only the first one will be converted)
         const arrBuffer = await toArrayBuffer(ev.target.files)
+
+        // Use the element specific file within the FileList (great if you have a multi-file input)
+        const arrBuffer = await toArrayBuffer(ev.target.files[0])
 
         /* do stuff */
     })
