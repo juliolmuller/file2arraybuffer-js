@@ -1,42 +1,43 @@
 {
   "name": "@lacussoft/to-arraybuffer",
-  "version": "1.1.0",
-  "description": "Basic function to convert files into ArrayBuffer object.",
+  "version": "1.1.1",
+  "description": "Basic function to convert files into ArrayBuffer objects.",
   "author": "Julio L. Muller",
   "license": "MIT",
   "keywords": [
     "lacussoft",
-    "arquivo",
     "file",
     "blob",
+    "binary",
     "buffer",
     "arraybuffer",
-    "attachment",
-    "anexo",
-    "br"
+    "attachment"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lacussoft/to-arraybuffer.git"
+    "url": "git+https://github.com/juliolmuller/to-arraybuffer.git"
   },
   "bugs": {
-    "url": "https://github.com/lacussoft/to-arraybuffer/issues"
+    "url": "https://github.com/juliolmuller/to-arraybuffer/issues"
   },
-  "homepage": "https://github.com/lacussoft/to-arraybuffer#readme",
-  "main": "index.js",
+  "homepage": "https://github.com/juliolmuller/to-arraybuffer#readme",
+  "typings": "build/types.d.ts",
+  "main": "build/index.js",
   "scripts": {
-    "build": "npm run build:dist && npm run build:node",
-    "build:dist": "parcel build src/dist.js -o to-arraybuffer.js --no-minify && parcel build src/dist.js -o to-arraybuffer.min.js",
-    "build:node": "babel src/index.js -o index.js --presets=@babel/preset-env",
+    "build:browser": "rm -rf dist/ && webpack --mode=production",
+    "build:node": "rm -rf build/ && babel src/ --out-dir build/ && cp src/*.d.ts build/",
+    "build": "npm run build:browser && npm run build:node",
+    "lint": "eslint --fix src/**/*.js",
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "@lacussoft/eslint-config-standard": "^1.0.6",
-    "eslint": "^6.8.0",
-    "jest": "^25.5.4",
-    "parcel-bundler": "^1.12.4"
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@lacussoft/eslint-config": "^1.0.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.15.0",
+    "webpack": "^5.10.3",
+    "webpack-cli": "^4.2.0"
   }
 }
