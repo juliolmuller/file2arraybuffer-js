@@ -30,6 +30,9 @@
     "lint": "eslint --fix src/**/*.js",
     "test": "jest"
   },
+  "optionalDependencies": {
+    "promise-polyfill": "^8.2.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
