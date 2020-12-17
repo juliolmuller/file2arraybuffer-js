@@ -1,6 +1,6 @@
 {
   "env": {
-    "shared-node-browser": true,
+    "browser": true,
     "es6": true,
     "jest": true
   },
@@ -18,6 +18,8 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-param-reassign": "off",
+    "prefer-destructuring": "off",
     "semi": ["error", "always"],
     "semi-style": ["error", "last"]
   }
