@@ -1,22 +1,24 @@
 {
-  "ignorePatterns": [
-    "/index.js"
-  ],
   "env": {
-    "browser": true,
-    "commonjs": true,
+    "shared-node-browser": true,
     "es6": true,
     "jest": true
   },
   "extends": [
-    "@lacussoft/standard"
+    "@lacussoft"
+  ],
+  "ignorePatterns": [
+    "build/",
+    "dist/",
+    "**/*.d.ts",
+    "!.babelrc*"
   ],
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "rules": {
-    "no-param-reassign": "off",
-    "prefer-destructuring": "off"
+    "semi": ["error", "always"],
+    "semi-style": ["error", "last"]
   }
 }
