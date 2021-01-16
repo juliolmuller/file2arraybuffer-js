@@ -21,7 +21,7 @@ $ npm install @lacussoft/to-arraybuffer
 import toArrayBuffer from '@lacussoft/to-arraybuffer'
 
 // Common JS
-const { toArrayBuffer } = require('@lacussoft/to-arraybuffer')
+const toArrayBuffer = require('@lacussoft/to-arraybuffer').default
 ```
 
 or import it through your HTML file, using CDN:
