@@ -8,6 +8,12 @@
 
 Promise based function to generate **ArrayBuffer** objects for files - commonly required by web services like the SharePoint REST API.
 
+## Browser Support
+
+![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) |
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 11 ✔ |
+
 ## Installation
 
 ```bash
@@ -21,7 +27,7 @@ $ npm install @lacussoft/to-arraybuffer
 import toArrayBuffer from '@lacussoft/to-arraybuffer'
 
 // Common JS
-const toArrayBuffer = require('@lacussoft/to-arraybuffer').default
+const toArrayBuffer = require('@lacussoft/to-arraybuffer')
 ```
 
 or import it through your HTML file, using CDN:
