@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {},
+    "sourceMap": false,
+    "target": "ES5",
+    "module": "esnext",
+    "lib": [
+      "DOM",
+      "ES2015.Promise"
+    ],
+    // "types": [],
+    "moduleResolution": "node",
+    "useDefineForClassFields": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,                     /* Skip type checking of declaration files. */
+    "declaration": false,
+    "allowJs": false,
+    "noEmit": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "removeComments": false
+  },
+  "include": [
+    "src/"
+  ]
+}
