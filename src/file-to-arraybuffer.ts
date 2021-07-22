@@ -10,7 +10,7 @@ function fileToArrayBuffer(target: any) { // eslint-disable-line @typescript-esl
   if (typeof Promise === 'undefined') {
     throw new ReferenceError('This environment does not support Promises.')
   } else if (typeof ArrayBuffer === 'undefined') {
-    throw new ReferenceError('Your environment does not support ArrayBuffer.')
+    throw new ReferenceError('This environment does not support ArrayBuffer.')
   }
 
   if (!target) {
@@ -26,7 +26,7 @@ function fileToArrayBuffer(target: any) { // eslint-disable-line @typescript-esl
       return target.arrayBuffer()
     }
     if (typeof FileReader === 'undefined') {
-      throw new TypeError('Your environment does not support FileReader.')
+      throw new TypeError('This environment does not support FileReader.')
     }
 
     return new Promise((resolve, reject) => {
