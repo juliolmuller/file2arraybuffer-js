@@ -8,7 +8,7 @@ function fileToArrayBuffer(target: File): Promise<ArrayBuffer>
 
 function fileToArrayBuffer(target: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
   if (typeof Promise === 'undefined') {
-    throw new ReferenceError('Your environment does not support Promises.')
+    throw new ReferenceError('This environment does not support Promises.')
   } else if (typeof ArrayBuffer === 'undefined') {
     throw new ReferenceError('Your environment does not support ArrayBuffer.')
   }
@@ -21,8 +21,21 @@ function fileToArrayBuffer(target: any) { // eslint-disable-line @typescript-esl
     return Promise.resolve(target)
   }
 
-  if (typeof Blob !== 'undefined' && target.constructor === Blob) {
-    return target.arrayBuffer()
+  if (typeof Blob !== 'undefined' && target instanceof Blob) {
+    if (typeof target.arrayBuffer === 'function') {
+      return target.arrayBuffer()
+    }
+    if (typeof FileReader === 'undefined') {
+      throw new TypeError('Your environment does not support FileReader.')
+    }
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+
+      reader.onloadend = (ev) => resolve(ev.target?.result)
+      reader.onerror = (ev) => reject(ev.target?.error)
+      reader.readAsArrayBuffer(target)
+    })
   }
 
   let fileInputRelated = target as string | HTMLInputElement | FileList | File
@@ -52,17 +65,7 @@ function fileToArrayBuffer(target: any) { // eslint-disable-line @typescript-esl
   }
 
   if (typeof File !== 'undefined' && fileInputRelated.constructor === File) {
-    if (typeof FileReader === 'undefined') {
-      throw new TypeError('Your environment does not support FileReader.')
-    }
-
-    return fileInputRelated.arrayBuffer?.() ?? new Promise((resolve, reject) => {
-      const reader = new FileReader()
-
-      reader.onloadend = (ev) => resolve(ev.target?.result as ArrayBuffer)
-      reader.onerror = (ev) => reject(ev.target?.error)
-      reader.readAsArrayBuffer(fileInputRelated as File)
-    })
+    return fileToArrayBuffer(fileInputRelated) // will be treated as a Blob
   }
 
   return Promise.reject(new Error('Parameter type must be an instance of HTMLInputElement, FileList, File, String (input selector), Blob or ArrayBuffer'))
