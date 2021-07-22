@@ -1,10 +1,10 @@
-# LacusSoft :: to-arraybuffer
+# LacusSoft :: file2arraybuffer
 
-![NPM Latest Version](https://img.shields.io/npm/v/@lacussoft/to-arraybuffer)
-![Downloads Count](https://img.shields.io/npm/dm/@lacussoft/to-arraybuffer.svg)
-![Bundle Size](https://packagephobia.now.sh/badge?p=@lacussoft/to-arraybuffer)
-![Last Update Date](https://img.shields.io/github/last-commit/juliolmuller/to-arraybuffer)
-![Project License](https://img.shields.io/github/license/juliolmuller/to-arraybuffer)
+![NPM Latest Version](https://img.shields.io/npm/v/file2arraybuffer)
+![Downloads Count](https://img.shields.io/npm/dm/file2arraybuffer.svg)
+![Bundle Size](https://packagephobia.now.sh/badge?p=file2arraybuffer)
+![Last Update Date](https://img.shields.io/github/last-commit/juliolmuller/file2arraybuffer-js)
+![Project License](https://img.shields.io/github/license/juliolmuller/file2arraybuffer-js)
 
 Promise based function to generate **ArrayBuffer** objects for files - commonly required by web services like the SharePoint REST API.
 
@@ -17,24 +17,26 @@ Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 11 ✔ |
 ## Installation
 
 ```bash
-$ npm install @lacussoft/to-arraybuffer
+$ npm install file2arraybuffer
 ```
 
 ## Import
 
 ```js
 // ES Modules
-import toArrayBuffer from '@lacussoft/to-arraybuffer'
+import fileToArrayBuffer from 'file2arraybuffer'
 
 // Common JS
-const toArrayBuffer = require('@lacussoft/to-arraybuffer')
+const fileToArrayBuffer = require('file2arraybuffer')
 ```
 
 or import it through your HTML file, using CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@lacussoft/to-arraybuffer@latest/dist/to-arraybuffer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file2arraybuffer@latest/dist/to-arraybuffer.min.js"></script>
 ```
+
+**NOTE:** when used as UMD, global function will be available as `fileToArrayBuffer` ("To", not "2").
 
 ## Usage
 
@@ -48,23 +50,23 @@ You can use various parameter types to reference your HTML input element holding
     inputEl.addEventListener('change', async (ev) => {
 
         // Use a query selector directly
-        const arrBuffer = await toArrayBuffer('#attachment')
+        const arrBuffer = await fileToArrayBuffer('#attachment')
 
         // Use the HTML element directly (must be of type "file")
-        const arrBuffer = await toArrayBuffer(ev.target)
+        const arrBuffer = await fileToArrayBuffer(ev.target)
 
         // Use the element attribute that stores the FileList (only the first one will be converted)
-        const arrBuffer = await toArrayBuffer(ev.target.files)
+        const arrBuffer = await fileToArrayBuffer(ev.target.files)
 
         // Use the element specific file within the FileList (great if you have a multi-file input)
-        const arrBuffer = await toArrayBuffer(ev.target.files[0])
+        const arrBuffer = await fileToArrayBuffer(ev.target.files[0])
 
         /* do stuff */
     })
 
     // or if you got a Blob object
     const myBlob = new Blob(['Hello, world'], { type: 'text/plain' })
-    toArrayBuffer(myBlob).then((arrBuffer) => /* do stuff */)
+    fileToArrayBuffer(myBlob).then((arrBuffer) => /* do stuff */)
 
 </script>
 ```
@@ -76,11 +78,7 @@ However, keep in mind that the function handles one single file, so by referenci
 <script type="text/javascript">
 
     const input = document.getElementById("attachments")
-    const promises = []
-
-    for (const file of input.files) {
-      promises.push(toArrayBuffer(file))
-    }
+    const promises = Array.from(input.files).map(fileToArrayBuffer)
 
     Promise.all(promises).then((arrBuffers) => {
         /* do stuff */
