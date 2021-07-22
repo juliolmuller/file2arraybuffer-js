@@ -1,6 +1,6 @@
 {
   "name": "file2arraybuffer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Basic function to convert files into ArrayBuffer objects.",
   "author": "Julio L. Muller",
   "license": "MIT",
@@ -26,9 +26,6 @@
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint src/ --fix"
-  },
-  "optionalDependencies": {
-    "promise-polyfill": "^8.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
