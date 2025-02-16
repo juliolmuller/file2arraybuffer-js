@@ -85,7 +85,11 @@ export default defineConfig([
         target: 'esnext',
       }),
     ],
-    external: Object.keys(packageMeta.dependencies || {}),
+    external: [
+      ...Object.keys(packageMeta.dependencies || {}),
+      ...Object.keys(packageMeta.devDependencies || {}),
+      ...Object.keys(packageMeta.peerDependencies || {}),
+    ],
   },
 
   // Types declarations files
