@@ -1,13 +1,15 @@
 /* eslint-env node */
-import * as path from 'path'
-import { babel as babelPlugin } from '@rollup/plugin-babel'
-import { terser as terserPlugin } from 'rollup-plugin-terser'
-import nodeResolvePlugin from '@rollup/plugin-node-resolve'
+import babelPlugin from '@rollup/plugin-babel'
 import commonJsPlugin from '@rollup/plugin-commonjs'
-import typeScriptPlugin from 'rollup-plugin-typescript2'
-import declarationsPlugin from 'rollup-plugin-dts'
+import nodeResolvePlugin from '@rollup/plugin-node-resolve'
+import terserPlugin from '@rollup/plugin-terser'
+import typeScriptPlugin from '@rollup/plugin-typescript'
+import { defineConfig } from 'rollup'
 import deletePlugin from 'rollup-plugin-delete'
-import packageMeta from './package.json'
+import declarationsPlugin from 'rollup-plugin-dts'
+import esBuildPlugin from 'rollup-plugin-esbuild'
+
+import packageMeta from './package.json' with { type: 'json' }
 
 const inputFileName = 'src/index.ts'
 const bundleBanner = `/**
@@ -18,18 +20,9 @@ const bundleBanner = `/**
  */
 `
 
-const commonPlugins = (browser = false) => [
-  typeScriptPlugin(),
-  commonJsPlugin({ extensions: ['.js', '.ts'] }),
-  nodeResolvePlugin({ browser }),
-  babelPlugin({
-    babelHelpers: 'bundled',
-    configFile: path.resolve(__dirname, '.babelrc.js'),
-  }),
-]
-
-export default [
-  { // UMD
+export default defineConfig([
+  // UMD for legacy browsers
+  {
     input: inputFileName,
     output: [
       {
@@ -52,12 +45,24 @@ export default [
     ],
     plugins: [
       deletePlugin({
-        targets: ['dist/*', 'build/*'],
+        targets: [
+          'build/*',
+          'dist/*',
+        ],
       }),
-      ...commonPlugins(true),
+      nodeResolvePlugin(),
+      commonJsPlugin(),
+      typeScriptPlugin(),
+      babelPlugin({
+        babelHelpers: 'bundled',
+        presets: [['@babel/preset-env', { targets: '> 0.25%, not dead' }]],
+        extensions: ['.ts', '.js'],
+      }),
     ],
   },
-  { // CommonJS & ES Module
+
+  // CommonJS & ES Module
+  {
     input: inputFileName,
     output: [
       {
@@ -65,26 +70,33 @@ export default [
         format: 'cjs',
         sourcemap: 'inline',
         banner: bundleBanner,
-        exports: 'default',
       },
       {
         file: 'build/index.esm.js',
         format: 'es',
         sourcemap: 'inline',
         banner: bundleBanner,
-        exports: 'named',
       },
     ],
-    external: [
-      ...Object.keys(packageMeta.dependencies || {}),
-      ...Object.keys(packageMeta.devDependencies || {}),
-      ...Object.keys(packageMeta.peerDependencies || {}),
+    plugins: [
+      nodeResolvePlugin(),
+      commonJsPlugin(),
+      esBuildPlugin({
+        target: 'esnext',
+      }),
     ],
-    plugins: commonPlugins(),
+    external: Object.keys(packageMeta.dependencies || {}),
   },
-  { // Types declarations files
-    input: 'src/index.ts',
-    output: [{ file: 'build/index.d.ts', format: 'es' }],
-    plugins: [declarationsPlugin({})],
+
+  // Types declarations files
+  {
+    input: inputFileName,
+    output: {
+      file: 'build/index.d.ts',
+      format: 'es',
+    },
+    plugins: [
+      declarationsPlugin(),
+    ],
   },
-]
+])
