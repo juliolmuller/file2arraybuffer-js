@@ -30,7 +30,7 @@
     "prepare": "husky",
     "commit": "git-cz",
     "build": "tsc --noEmit && rollup --config",
-    "lint": "eslint src/ --fix",
+    "lint": "eslint --fix src/ eslint.config.mjs rollup.config.mjs",
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
@@ -45,10 +45,11 @@
     "@types/node": "^22.14.0",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.32.0",
-    "eslint-config-lacussoft": "^2.3.0",
+    "eslint": "^9.24.0",
+    "eslint-config-any": "^1.0.3",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
     "rollup": "^4.39.0",
     "rollup-plugin-delete": "^3.0.1",
     "rollup-plugin-dts": "^6.2.1",
