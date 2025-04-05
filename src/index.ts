@@ -1,1 +1,1 @@
-export { default } from './file-to-arraybuffer'
+export { default } from './file-to-arraybuffer';
