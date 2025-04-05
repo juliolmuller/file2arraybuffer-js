@@ -13,7 +13,7 @@ import packageMeta from './package.json' with { type: 'json' }
 
 const inputFileName = 'src/index.ts'
 const bundleBanner = `/**
- * file-to-arraybuffer v${packageMeta.version}
+ * file2arraybuffer v${packageMeta.version}
  *
  * @author ${packageMeta.author}.
  * @license ${packageMeta.license} - 2020-${new Date().getFullYear()}
