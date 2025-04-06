@@ -36,8 +36,20 @@ function fileToArrayBuffer(target: unknown): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.onloadend = (ev): void => resolve(ev.target?.result);
       reader.onerror = (ev): void => reject(ev.target?.error);
+
+      reader.onloadend = (ev): void => {
+        const result = ev.target?.result;
+        const error = ev.target?.error;
+
+        if (result) {
+          resolve(result as ArrayBuffer);
+          return;
+        }
+
+        reject(error ?? new Error('FileReader failed to read the file.'));
+      };
+
       reader.readAsArrayBuffer(target);
     });
   }
