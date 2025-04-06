@@ -1,4 +1,4 @@
-# LacusSoft :: file2arraybuffer
+# file2arraybuffer
 
 ![NPM Latest Version](https://img.shields.io/npm/v/file2arraybuffer)
 ![Downloads Count](https://img.shields.io/npm/dm/file2arraybuffer.svg)
@@ -46,27 +46,27 @@ You can use various parameter types to reference your HTML input element holding
 <input id="attachment" type="file"  />
 <script type="text/javascript">
 
-    const inputEl = document.getElementById("attachment")
-    inputEl.addEventListener('change', async (ev) => {
+  const inputEl = document.getElementById("attachment")
+  inputEl.addEventListener('change', async (ev) => {
 
-        // Use a query selector directly
-        const arrBuffer = await fileToArrayBuffer('#attachment')
+    // Use a query selector directly
+    const arrBuffer = await fileToArrayBuffer('#attachment')
 
-        // Use the HTML element directly (must be of type "file")
-        const arrBuffer = await fileToArrayBuffer(ev.target)
+    // Use the HTML element directly (must be of type "file")
+    const arrBuffer = await fileToArrayBuffer(ev.target)
 
-        // Use the element attribute that stores the FileList (only the first one will be converted)
-        const arrBuffer = await fileToArrayBuffer(ev.target.files)
+    // Use the element attribute that stores the FileList (only the first one will be converted)
+    const arrBuffer = await fileToArrayBuffer(ev.target.files)
 
-        // Use the element specific file within the FileList (great if you have a multi-file input)
-        const arrBuffer = await fileToArrayBuffer(ev.target.files[0])
+    // Use the element specific file within the FileList (great if you have a multi-file input)
+    const arrBuffer = await fileToArrayBuffer(ev.target.files[0])
 
-        /* do stuff */
-    })
+    /* do stuff */
+  })
 
-    // or if you got a Blob object
-    const myBlob = new Blob(['Hello, world'], { type: 'text/plain' })
-    fileToArrayBuffer(myBlob).then((arrBuffer) => /* do stuff */)
+  // or if you got a Blob object
+  const myBlob = new Blob(['Hello, world'], { type: 'text/plain' })
+  fileToArrayBuffer(myBlob).then((arrBuffer) => /* do stuff */)
 
 </script>
 ```
@@ -77,12 +77,12 @@ However, keep in mind that the function handles one single file, so by referenci
 <input id="attachments" type="file" multiple="true" />
 <script type="text/javascript">
 
-    const input = document.getElementById("attachments")
-    const promises = Array.from(input.files).map(fileToArrayBuffer)
+  const input = document.getElementById("attachments")
+  const promises = Array.from(input.files).map(fileToArrayBuffer)
 
-    Promise.all(promises).then((arrBuffers) => {
-        /* do stuff */
-    })
+  Promise.all(promises).then((arrBuffers) => {
+    /* do stuff */
+  })
 
 </script>
 ```
