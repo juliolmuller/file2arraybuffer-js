@@ -1,0 +1,44 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  prepare-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project Artifacts
+        uses: actions/checkout@v4
+      - name: Setup Bun.js
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check Types & Linting
+        run: |
+          bun run type-check
+          bun run lint
+
+      - name: Set Package Version
+        run: |
+          TAG_NAME="${{ github.event.release.tag_name }}"
+          echo "Validating tag: $TAG_NAME"
+          if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Invalid tag format. Expected format: v<MAJOR>.<MINOR>.<PATCH> (e.g., v1.2.3)"
+            exit 1
+          fi
+          VERSION=${TAG_NAME#v}
+          echo "Setting package version to $VERSION"
+          npm version --no-git-tag-version "$VERSION"
+
+      - name: Build Distribution Artifacts
+        run: bun run build
+
+      - name: Publish to NPM
+        run: bun publish --provenance --access public
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
