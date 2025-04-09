@@ -14,6 +14,8 @@ concurrency:
 
 env:
   HUSKY: 0
+  NODE_VERSION: 20
+  BUN_VERSION: latest
 
 jobs:
   type-check:
@@ -21,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
       - run: bun install --frozen-lockfile
       - run: bun run type-check
 
@@ -29,5 +33,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
       - run: bun install --frozen-lockfile
       - run: bun run lint
+
+  publish-mock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: ${{ env.NPM_REGISTRY_URL }}
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: npm publish --dry-run --provenance --access public
