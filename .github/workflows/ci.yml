@@ -19,6 +19,7 @@ env:
 
 jobs:
   type-check:
+    name: TypeScript Compilation Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +30,7 @@ jobs:
       - run: bun run type-check
 
   lint:
+    name: Linting & Formatting Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,6 +41,7 @@ jobs:
       - run: bun run lint
 
   publish-mock:
+    name: Publishing Package Dry Run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
